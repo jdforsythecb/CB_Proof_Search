@@ -25,7 +25,10 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\SNAP400\Gigs\apps\CBProofSearch\</InstallUrl>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ProductName>CB Proof Search</ProductName>
+    <PublisherName>Church Budget Envelope Company</PublisherName>
+    <SuiteName>CB Proof Search</SuiteName>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
