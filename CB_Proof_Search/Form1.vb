@@ -172,4 +172,27 @@ Public Class Form1
         stngFrm.Show()
 
     End Sub
+
+
+    Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
+        '' get which proof is selected
+        Dim file As String = fileList(lstbxResults.SelectedIndex).FullName
+        Try
+            Dim myprocess As New Process
+            myprocess.StartInfo.CreateNoWindow = False
+            myprocess.StartInfo.Verb = "print"
+            myprocess.StartInfo.FileName = file
+            myprocess.Start()
+            myprocess.WaitForExit(10000)
+            Try
+                myprocess.CloseMainWindow()
+                myprocess.Close()
+            Catch ex As Exception
+
+            End Try
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+    End Sub
 End Class

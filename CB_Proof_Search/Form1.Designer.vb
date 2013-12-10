@@ -28,6 +28,7 @@ Partial Class Form1
         Me.lstbxResults = New System.Windows.Forms.ListBox()
         Me.txtSearch = New System.Windows.Forms.TextBox()
         Me.lstboxPathList = New System.Windows.Forms.ListBox()
+        Me.btnPrint = New System.Windows.Forms.Button()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -78,11 +79,21 @@ Partial Class Form1
         Me.lstboxPathList.Size = New System.Drawing.Size(274, 368)
         Me.lstboxPathList.TabIndex = 8
         '
+        'btnPrint
+        '
+        Me.btnPrint.Location = New System.Drawing.Point(126, 400)
+        Me.btnPrint.Name = "btnPrint"
+        Me.btnPrint.Size = New System.Drawing.Size(75, 23)
+        Me.btnPrint.TabIndex = 9
+        Me.btnPrint.Text = "Print Proof"
+        Me.btnPrint.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(216, 443)
+        Me.Controls.Add(Me.btnPrint)
         Me.Controls.Add(Me.lstboxPathList)
         Me.Controls.Add(Me.lblStatus)
         Me.Controls.Add(Me.lstbxResults)
@@ -102,5 +113,6 @@ Partial Class Form1
     Friend WithEvents lstbxResults As System.Windows.Forms.ListBox
     Friend WithEvents txtSearch As System.Windows.Forms.TextBox
     Friend WithEvents lstboxPathList As System.Windows.Forms.ListBox
+    Friend WithEvents btnPrint As System.Windows.Forms.Button
 
 End Class
