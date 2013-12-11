@@ -5,9 +5,11 @@ Public Class Form1
     '' global constants for base paths
     Private Const CBPROOFPATH As String = "g:\_CBProofs\"
     Private Const MMPROOFPATH As String = "g:\Jalan\PROOFS\"
+    Private Const MMPROOFPATHWILL As String = "g:\WSCAN\MM"
 
     '' global variable to hold the current fileinfo list - IO.FileInfo to preserve the name and path of files
     Dim fileList As New List(Of IO.FileInfo)
+    Dim masterFileList As New List(Of IO.FileInfo)
 
     '' global variable to hold the full list of paths to search
     Dim pathList As New List(Of String)
@@ -54,9 +56,30 @@ Public Class Form1
                 '' add the new results to the list
                 For Each file In fileList
                     lstbxResults.Items.Add(file.Name)
+                    masterFileList.Add(file)
                     '' for every file, increment the file count
                     fileCount += 1
                 Next
+
+                '' if this is MM, search for Will's proofs in the appropriate g:\WSCAN\MM#\#-#\####\ folder
+                If (My.Settings.isMM = True) Then
+                    Dim firstNum As String = search.Substring(0, 1)
+                    Dim secondNum As String = search.Substring(1, 1)
+                    pathToSearch = MMPROOFPATHWILL & firstNum & "\" & firstNum & "-" & secondNum & "\" & search & "\"
+                    pathList.Clear()
+                    pathList.Add(pathToSearch)
+                    getAllSubfolders(pathToSearch)
+                    '' get all files in the wscan folders that have proof in the name (the method already does a *.pdf)
+                    getFileList("proof")
+
+                    '' add the new results to the list
+                    For Each File In fileList
+                        lstbxResults.Items.Add(File.Name)
+                        masterFileList.Add(File)
+                        fileCount += 1
+                    Next
+
+                End If
 
                 '' update the status with the counts
                 lblStatus.Text = fileCount & " files found"
@@ -74,7 +97,7 @@ Public Class Form1
         '' open the selected file in its default program
         Dim openFile As New ProcessStartInfo()
         With openFile
-            .FileName = fileList(lstbxResults.SelectedIndex).FullName
+            .FileName = masterFileList(lstbxResults.SelectedIndex).FullName
             .UseShellExecute = True
         End With
         Process.Start(openFile)
@@ -91,7 +114,7 @@ Public Class Form1
             If selInd <> -1 Then
 
                 '' get the full path of the item selected
-                Dim selectedPath As String = fileList(selInd).FullName
+                Dim selectedPath As String = masterFileList(selInd).FullName
 
                 '' open explorer and select the file clicked
                 Call Shell("explorer.exe /select," & selectedPath, AppWinStyle.NormalFocus)
@@ -133,19 +156,12 @@ Public Class Form1
             If (Directory.Exists(path)) Then
                 Dim folderInfo As New IO.DirectoryInfo(path)
 
-                '' old way, getting the api to run the wilcard match
-
-                '' Dim arrFilesInFolder() As IO.FileInfo
-                'arrFilesInFolder = folderInfo.GetFiles("*" + search + "*.*")
-                '' copy the array of files to a list and append to the global fileList
-                'fileList.AddRange(arrFilesInFolder.ToList())
-
                 '' because of weird results searching for, e.g. *89*.* (files came back without "89" in the name,
                 '' maybe due to something with long filenames and 8.3 equivalents?), we now get *.* and filter
                 '' the results here
 
-                '' 11-29-13 added OrderBy to sort files alphabetically
-                For Each fileName As IO.FileInfo In folderInfo.GetFiles("*.*").OrderBy(Function(x) x.Name)
+                '' 11-29-13 added OrderBy to sort files alphabetically (per folder)
+                For Each fileName As IO.FileInfo In folderInfo.GetFiles("*.pdf").OrderBy(Function(x) x.Name)
                     If fileName.Name.ToUpper.Contains(search.ToUpper) Then
                         fileList.Add(fileName)
                     End If
