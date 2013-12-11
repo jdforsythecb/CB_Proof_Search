@@ -28,7 +28,7 @@
     <ProductName>CB Proof Search</ProductName>
     <PublisherName>Church Budget Envelope Company</PublisherName>
     <SuiteName>CB Proof Search</SuiteName>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>5</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>

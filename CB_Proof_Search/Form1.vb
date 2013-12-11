@@ -67,6 +67,7 @@ Public Class Form1
                     Dim secondNum As String = search.Substring(1, 1)
                     pathToSearch = MMPROOFPATHWILL & firstNum & "\" & firstNum & "-" & secondNum & "\" & search & "\"
                     pathList.Clear()
+                    fileList.Clear()
                     pathList.Add(pathToSearch)
                     getAllSubfolders(pathToSearch)
                     '' get all files in the wscan folders that have proof in the name (the method already does a *.pdf)
